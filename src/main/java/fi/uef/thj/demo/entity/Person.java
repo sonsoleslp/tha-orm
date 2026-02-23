@@ -4,10 +4,14 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 @Table(name="person")
@@ -38,11 +42,16 @@ public class Person {
     @Column(name="birthdate", nullable = false)
     private Date birthdate;
     
+    @Enumerated(EnumType.STRING)
     @Column(name="gender", nullable = false)
     private Gender gender;
-    
+
+    @Enumerated(EnumType.STRING)
     @Column(name="role", nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "student")
+    private Set<Enrollment> enrollments;
 
     public Person(Long id,  String name, String surname, String city, String address, String phone,
     Date birthdate, Gender gender, Role role) {
@@ -114,5 +123,13 @@ public class Person {
     }
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }   

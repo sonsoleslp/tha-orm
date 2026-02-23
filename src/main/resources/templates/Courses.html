@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Enrollment system - Courses</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='https://bootswatch.com/5/flatly/bootstrap.min.css'>
+</head>
+<body>
+    <div class="container">
+        <h1>List of Courses</h1>
+        <a href="/"><button class="btn btn-secondary">Back to Persons</button></a>
+        <a href="./courses/new"><button class="btn btn-warning">Add new course</button></a><br/><br/>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Credits</th>
+                    <th>Type</th>
+                    <th>Year</th>
+                    <th>Semester</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="course : ${courses}">
+                    <td th:text="${course.id}"></td>
+                    <td th:text="${course.name}"></td>
+                    <td th:text="${course.credits}"></td>
+                    <td th:text="${course.type}"></td>
+                    <td th:text="${course.year}"></td>
+                    <td th:text="${course.semester}"></td>
+                    <td>
+                        <a th:href="@{/courses/{id}/students(id=${course.id})}">
+                            <button class="btn btn-info btn-sm">View Enrolled Students</button>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

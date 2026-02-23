@@ -9,8 +9,9 @@
 </head>
 <body>
     <div class="container"> 
-        <h1>List of persons</h1> 
-        <a href="./Persons/new"><button class="btn btn-warning">Add new person</button></a><br/><br/>
+        <h1>List of persons</h1>
+        <a href="./Persons/new"><button class="btn btn-warning">Add new person</button></a>
+        <a href="/courses"><button class="btn btn-info">View Courses</button></a><br/><br/>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -23,6 +24,7 @@
                     <th>Birthdate</th>
                     <th>Gender</th>
                     <th>Role</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +39,11 @@
                     <td th:text="${person.birthdate}"></td>
                     <td th:text="${person.gender}"></td>
                     <td th:text="${person.role}"></td>
+                    <td>
+                        <a th:href="@{/Persons/{id}/courses(id=${person.id})}">
+                            <button class="btn btn-info btn-sm">View Courses</button>
+                        </a>
+                    </td>
                 </tr>
 
             </tbody>

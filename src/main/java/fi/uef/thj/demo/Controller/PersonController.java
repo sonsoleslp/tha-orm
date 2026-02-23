@@ -3,34 +3,48 @@ package fi.uef.thj.demo.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import fi.uef.thj.demo.service.PersonService;
 import fi.uef.thj.demo.entity.Person;
+import fi.uef.thj.demo.entity.Course;
+import java.util.List;
 
 @Controller
 public class PersonController {
     private final PersonService personService;
-    public PersonController(PersonService personService){
+
+    public PersonController(PersonService personService) {
         this.personService = personService;
     }
-    @GetMapping("/") 
-    public String listPersons(Model model){
-        model.addAttribute("Persons",personService.getAllPersons());
+
+    @GetMapping("/")
+    public String listPersons(Model model) {
+        model.addAttribute("Persons", personService.getAllPersons());
         return "Persons";
     }
 
     @GetMapping("/Persons/new")
-    public String studentFORM(Model model){
+    public String studentFORM(Model model) {
         Person person = new Person();
         model.addAttribute("person", person);
-        return("AddPerson");
+        return "AddPerson";
     }
 
     @PostMapping("/Persons")
-    public String savePerson(@ModelAttribute("person")Person person){
+    public String savePerson(@ModelAttribute("person") Person person) {
         personService.savePerson(person);
         return "redirect:/";
+    }
+
+    @GetMapping("/Persons/{id}/courses")
+    public String listEnrolledCourses(@PathVariable Long id, Model model) {
+        Person person = personService.getPersonById(id);
+        List<Course> courses = personService.getEnrolledCourses(id);
+        model.addAttribute("person", person);
+        model.addAttribute("courses", courses);
+        return "PersonCourses";
     }
 }
